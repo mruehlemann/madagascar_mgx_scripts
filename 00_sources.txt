@@ -1,0 +1,14 @@
+WORKFOLDER="/work_beegfs/sukmb276/Metagenomes/projects/230505_Madagascar_MGX"
+DATAFOLDER="/work_beegfs/sukmb276/Metagenomes/projects/230505_Madagascar_MGX/output/Samples_new"
+BASEFOLDER="/work_beegfs/sukmb276/Metagenomes/projects/230505_Madagascar_MGX"
+
+GROUPINGFILE="$workfolder/sample_mgx_all.tsv"
+
+ALL_BATCHES=($(cut -f 9 $GROUPINGFILE | sort | uniq | grep -v Batch2))
+ALL_SAMPLES=($(cut -f 8 $GROUPINGFILE | grep -v MGX_NEW))
+
+PARALLEL="/work_beegfs/sukmb276/software/bin/parallel"
+MAGSCOT_EXEC="/work_beegfs/sukmb276/github/MAGScoT/MAGScoT.R"
+PYTHON="/home/sukmb276/.conda/envs/binning_env/bin/python"
+
+PROJECTID="Madagascar"
