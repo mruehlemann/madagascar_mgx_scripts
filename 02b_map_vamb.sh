@@ -3,7 +3,7 @@
 #SBATCH --mem=100gb
 #SBATCH --time=1-00:00
 #SBATCH --output=/work_beegfs/sukmb276/Metagenomes/projects/230505_Madagascar_MGX/log/%A_%a.out
-#SBATCH --job-name="mb_01_catalog"
+#SBATCH --job-name="02b_vamb"
 
 ###########################
 ####    SETUP     #######
@@ -18,6 +18,7 @@ cd $WORKFOLDER
 ####    ENVIRONMENT       ########
 ####################################
 
+module load miniconda3
 source activate metagenome_env
 module load samtools
 
@@ -28,7 +29,7 @@ module load samtools
 cd $TMPDIR
 
 mgx_new=${all_samples[$SLURM_ARRAY_TASK_ID]}
-batch=$(grep $mgx_new $GROUPINGFILE | cut -f 9)
+batch=$(grep $mgx_new $GROUPINGFILE | cut -f $BATCHCOL)
 
 if [ -e "$WORKFOLDER/${PROJECTID}_results/vamb/${batch}/${mgx_new}_${batch}.depth.txt" ]; then exit; fi
 

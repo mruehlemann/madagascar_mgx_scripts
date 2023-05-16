@@ -4,8 +4,11 @@ BASEFOLDER="/work_beegfs/sukmb276/Metagenomes/projects/230505_Madagascar_MGX"
 
 GROUPINGFILE="$WORKFOLDER/sample_mgx_all.tsv"
 
-ALL_BATCHES=($(cut -f 9 $GROUPINGFILE | sort | uniq | grep -v Batch2))
-ALL_SAMPLES=($(cut -f 8 $GROUPINGFILE | grep -v MGX_NEW))
+BATCHCOL=9
+IDCOL=8
+
+ALL_BATCHES=($(cut -f $BATCHCOL $GROUPINGFILE | tail -n+2 | sort | uniq ))
+ALL_SAMPLES=($(cut -f $IDCOL $GROUPINGFILE | tail -n+2 ))
 
 PARALLEL="/work_beegfs/sukmb276/software/bin/parallel"
 MAGSCOT_EXEC="/work_beegfs/sukmb276/github/MAGScoT/MAGScoT.R"

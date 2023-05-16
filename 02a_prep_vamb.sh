@@ -3,7 +3,7 @@
 #SBATCH --mem=100gb
 #SBATCH --time=1-00:00
 #SBATCH --output=/work_beegfs/sukmb276/Metagenomes/projects/230505_Madagascar_MGX/log/%A_%a.out
-#SBATCH --job-name="mb_01_catalog"
+#SBATCH --job-name="02a_vamb"
 
 ###########################
 ####    SETUP       #######
@@ -22,11 +22,13 @@ batch=${ALL_BATCHES[$SLURM_ARRAY_TASK_ID]}
 
 cd ${batch}_results
 
-batch_samples=($(grep $batch $GROUPINGFILE | cut -f 8))
+batch_samples=($(grep $batch $GROUPINGFILE | cut -f $IDCOL))
 
 ####################################
 ####    ENVIRONMENT    ########
 ####################################
+
+module load miniconda3
 source activate metagenome_env
 module load samtools
 
