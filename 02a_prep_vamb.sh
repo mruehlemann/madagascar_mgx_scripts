@@ -36,6 +36,8 @@ module load samtools
 
 cd $TMPDIR
 
+if [ -e "$WORKFOLDER/${PROJECTID}_results/vamb/$batch/${batch}.catalogue.mmi" ]; then exit; fi
+
 for mgx_new in ${batch_samples[@]}; do
     cat $workfolder/${PROJECTID}_results/samples/$mgx_new/${mgx_new}_fcontigsfiltered.fa > ${mgx_new}.sample.fasta
 done

@@ -30,6 +30,8 @@ cd $TMPDIR
 mgx_new=${all_samples[$SLURM_ARRAY_TASK_ID]}
 batch=$(grep $mgx_new $GROUPINGFILE | cut -f 9)
 
+if [ -e "$WORKFOLDER/${PROJECTID}_results/vamb/${batch}/${mgx_new}_${batch}.depth.txt" ]; then exit; fi
+
 echo $batch $mgx_new
 minimap2 -t ${SLURM_CPUS_PER_TASK} -N 50 -ax sr $WORKFOLDER/${PROJECTID}_results/vamb/${batch}/${batch}.catalogue.mmi \
     $WORKFOLDER/${PROJECTID}_results/samples/${mgx_new}/qced_files/${mgx_new}_R1_clean.fastq.gz \
