@@ -38,10 +38,10 @@ module load samtools
 
 cd $TMPDIR
 
-if [ -e "$WORKFOLDER/${PROJECTID}_results/vamb/$batch/${batch}.catalogue.mmi" ]; then exit; fi
+if [ -e "$WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb/${batch}.catalogue.mmi" ]; then exit; fi
 
 for mgx_new in ${batch_samples[@]}; do
-    cat $workfolder/${PROJECTID}_results/samples/$mgx_new/${mgx_new}_fcontigsfiltered.fa > ${mgx_new}.sample.fasta
+    cat $WORKFOLDER/${PROJECTID}_results/samples/$mgx_new/megahit/${mgx_new}_fcontigsfiltered.fa > ${mgx_new}.sample.fasta
 done
 
 cat *.sample.fasta > ${batch}.catalogue.fna
@@ -52,7 +52,7 @@ minimap2 -I100G -d ${batch}.catalogue.mmi ${batch}.catalogue.fna # make index
 
 gzip ${batch}.catalogue.fna
 
-mkdir -p $WORKFOLDER/${PROJECTID}_results/vamb/$batch
+mkdir -p $WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb
 
-mv ${batch}.catalogue.fna.gz $WORKFOLDER/${PROJECTID}_results/vamb/$batch/
-mv ${batch}.catalogue.mmi $WORKFOLDER/${PROJECTID}_results/vamb/$batch/
+mv ${batch}.catalogue.fna.gz $WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb/
+mv ${batch}.catalogue.mmi $WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb/

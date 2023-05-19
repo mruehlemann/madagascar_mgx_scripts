@@ -28,17 +28,17 @@ module load samtools
 
 cd $TMPDIR
 
-mgx_new=${all_samples[$SLURM_ARRAY_TASK_ID]}
+mgx_new=${ALL_SAMPLES[$SLURM_ARRAY_TASK_ID]}
 batch=$(grep $mgx_new $GROUPINGFILE | cut -f $BATCHCOL)
 
-if [ -e "$WORKFOLDER/${PROJECTID}_results/vamb/${batch}/${mgx_new}_${batch}.depth.txt" ]; then exit; fi
+if [ -e "$WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb/${mgx_new}_${batch}.depth.txt" ]; then exit; fi
 
 echo $batch $mgx_new
-minimap2 -t ${SLURM_CPUS_PER_TASK} -N 50 -ax sr $WORKFOLDER/${PROJECTID}_results/vamb/${batch}/${batch}.catalogue.mmi \
+minimap2 -t ${SLURM_CPUS_PER_TASK} -N 50 -ax sr $WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb/${batch}.catalogue.mmi \
     $WORKFOLDER/${PROJECTID}_results/samples/${mgx_new}/qced_files/${mgx_new}_R1_clean.fastq.gz \
     $WORKFOLDER/${PROJECTID}_results/samples/${mgx_new}/qced_files/${mgx_new}_R2_clean.fastq.gz > ${mgx_new}.minimap.sam
 samtools view -F 3584 -b --threads ${SLURM_CPUS_PER_TASK} ${mgx_new}.minimap.sam | samtools sort > ${mgx_new}.minimap.bam
 
-jgi_summarize_bam_contig_depths --outputDepth $WORKFOLDER/${PROJECTID}_results/vamb/${batch}/${mgx_new}_${batch}.depth.txt ${mgx_new}.minimap.bam
+jgi_summarize_bam_contig_depths --outputDepth $WORKFOLDER/${PROJECTID}_results/subgroups/${batch}/vamb/${mgx_new}_${batch}.depth.txt ${mgx_new}.minimap.bam
 
 

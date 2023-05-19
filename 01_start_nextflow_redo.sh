@@ -44,12 +44,19 @@ done
 
 
 
-for i in $(grep keep:1 mntr.tsc | grep "QC:3," | grep ":," | cut -d ',' -f 1-2); do
-echo $i
-read MGX_NEW Batch2 <<< $(echo $i | tr ',' ' ')
+for MGX_NEW in $(grep keep:1 mntr.tsc | grep -v "QC:3," | grep ":," | cut -d ',' -f 1-2); do
+echo $MGX_NEW
+mkdir $WORKFOLDER/${PROJECTID}_results/samples/$MGX_NEW 
+mkdir $WORKFOLDER/${PROJECTID}_results/samples/$MGX_NEW/qced_files
+mv ${MGX_NEW}_*_clean.fastq.gz $WORKFOLDER/${PROJECTID}_results/samples/$MGX_NEW/qced_files
+done
+
+
+for MGX_NEW in $(ls *R1_clean.fastq.gz | cut -d "_" -f 1); do
+echo $MGX_NEW
 mkdir ${PROJECTID}_results/samples/$MGX_NEW 
 mkdir ${PROJECTID}_results/samples/$MGX_NEW/qced_files
-mv ${Batch2}_results/qced_files/${MGX_NEW}_*_clean.fastq.gz ${PROJECTID}_results/samples/$MGX_NEW/qced_files
+mv ${MGX_NEW}_*_clean.fastq.gz $WORKFOLDER/${PROJECTID}_results/samples/$MGX_NEW/qced_files
 done
 
 ####
