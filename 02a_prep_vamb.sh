@@ -20,8 +20,6 @@ cd $WORKFOLDER
 
 batch=${ALL_BATCHES[$SLURM_ARRAY_TASK_ID]}
 
-cd ${batch}_results
-
 batch_samples=($(grep $batch $GROUPINGFILE | cut -f $IDCOL))
 
 ####################################
